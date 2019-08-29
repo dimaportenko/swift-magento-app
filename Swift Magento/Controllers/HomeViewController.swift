@@ -12,6 +12,8 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet var pageControl: UIPageControl!
     @IBOutlet var sliderScrollView: UIScrollView!
 
+    var restTask: URLSessionDataTask!
+
     let slidesData: [[String: String]] = [
         [
             "title": "New Luma Yoga Collection",
@@ -37,6 +39,8 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
         pageControl.numberOfPages = slides.count
         pageControl.currentPage = 0
 //        sliderScrollView.bringSubviewToFront(pageControl)
+
+        testRestClient()
     }
 
     // MARK: - slides setup -
@@ -67,5 +71,32 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let pageIndex = round(scrollView.contentOffset.x / view.frame.width)
         pageControl.currentPage = Int(pageIndex)
+    }
+}
+
+extension HomeViewController {
+    static let sharedWebClient = WebClient(baseUrl: "http://demo-acm-2.bird.eu/rest/V1")
+
+    func testRestClient() {
+        restTask?.cancel()
+
+//        activityIndicator.startAnimating()
+
+        let restResource = Resource<DirectoryCurrency, CustomError>(jsonDecoder: JSONDecoder(), path: "/directory/currency")
+
+        restTask = HomeViewController.sharedWebClient.load(resource: restResource) { [weak self] response in
+
+//            guard let controller = self else { return }
+            print("### response value", response.value)
+            DispatchQueue.main.async {
+//                controller.activityIndicator.stopAnimating()
+
+//                if let friends = response.value?.friends {
+//                    controller.friends = friends
+//                } else if let error = response.error {
+//                    controller.handleError(error)
+//                }
+            }
+        }
     }
 }
