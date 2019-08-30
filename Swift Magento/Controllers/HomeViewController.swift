@@ -14,46 +14,43 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
 
     var restTask: URLSessionDataTask!
 
-    let slidesData: [[String: String]] = [
-        [
-            "title": "New Luma Yoga Collection",
-            "image": "http://mma.mage2.interactivated.me/media/wysiwyg/home/home-main.jpg",
-        ],
-        [
-            "title": "Even more ways to mix and match",
-            "image": "http://mma.mage2.interactivated.me/media/wysiwyg/home/home-t-shirts.png",
-        ],
-        [
-            "title": "Find conscientious, comfy clothing in our eco-friendly collection",
-            "image": "http://mma.mage2.interactivated.me/media/wysiwyg/home/home-eco.jpg",
-        ],
-    ]
+    var storeConfig: MageStoreConfig?
+    var config: MageHomeConfigContent? {
+        didSet {
+            DispatchQueue.main.async {
+                self.setupSlides()
+            }
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         sliderScrollView.delegate = self
+
+        getConfig()
+    }
+
+    func setupSlides() {
         let slides = createSlides()
         setupSlideScrollView(with: slides)
 
         pageControl.numberOfPages = slides.count
         pageControl.currentPage = 0
-//        sliderScrollView.bringSubviewToFront(pageControl)
-
-        testRestClient()
     }
 
     // MARK: - slides setup -
 
     func createSlides() -> [SlideView] {
-        let slides = slidesData.map { (slideDict) -> SlideView in
+        let slides = config?.slider.map { (slideConf) -> SlideView in
             let slide: SlideView = Bundle.main.loadNibNamed("SlideView", owner: self, options: nil)?.first as! SlideView
-            slide.label.text = slideDict["title"] ?? ""
-            slide.imageView.loadImageUsingCache(withUrl: slideDict["image"] ?? "")
+            slide.label.text = slideConf.title
+            let urlString = (storeConfig?.base_media_url ?? "") + slideConf.image
+            slide.imageView.loadImageUsingCache(withUrl: urlString)
             return slide
         }
 
-        return slides
+        return slides ?? []
     }
 
     func setupSlideScrollView(with slides: [SlideView]) {
@@ -72,14 +69,27 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
         let pageIndex = round(scrollView.contentOffset.x / view.frame.width)
         pageControl.currentPage = Int(pageIndex)
     }
-}
 
-extension HomeViewController {
-    func testRestClient() {
+    // MARK: - Rest Actions  -
+
+    func getConfig() {
         restTask?.cancel()
 
-        restTask = MagentoClient.shared.getCurrency(completion: { (response) in
-            print("### response", response)
+        restTask = MagentoClient.shared.getConfig {
+            if let configs = $0.value {
+                self.storeConfig = configs.first
+                self.getHomeConfig()
+            }
+        }
+    }
+
+    func getHomeConfig() {
+        restTask?.cancel()
+
+        restTask = MagentoClient.shared.getHomeConfig(completion: { result, _ in
+            if result != nil {
+                self.config = result
+            }
         })
     }
 }

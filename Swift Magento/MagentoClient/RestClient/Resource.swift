@@ -32,7 +32,7 @@ public struct Resource<A, CustomError> {
 }
 
 extension Resource where A: Decodable, CustomError: Decodable {
-    init(jsonDecoder: JSONDecoder,
+    init(jsonDecoder: JSONDecoder = JSONDecoder(),
          path: String,
          method: RequestMethod = .get,
          params: JSON = [:],
@@ -45,8 +45,24 @@ extension Resource where A: Decodable, CustomError: Decodable {
         self.method = method
         self.params = params
         self.headers = newHeaders
-        self.parse = {
-            try? jsonDecoder.decode(A.self, from: $0)
+        
+        
+        /**
+         *  self.parse extended for debuging purpose
+         *  release should be
+         *  self.parse = {
+         *     try? jsonDecoder.decode(A.self, from: $0)
+         *  }
+         */
+        self.parse = { data in
+            do {
+                print("### data", String(decoding: data, as: UTF8.self))
+                let result = try jsonDecoder.decode(A.self, from: data)
+                return result
+            } catch {
+                print("### Resource decode error \(error)")
+            }
+            return nil
         }
         self.parseError = {
             try? jsonDecoder.decode(CustomError.self, from: $0)

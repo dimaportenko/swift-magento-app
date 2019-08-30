@@ -19,6 +19,8 @@
 		663001AE2318221600812978 /* WebError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663001AD2318221600812978 /* WebError.swift */; };
 		663001BD23182E3D00812978 /* MageCurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663001BC23182E3D00812978 /* MageCurrency.swift */; };
 		66422CBA231932220036C8A2 /* MagentoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66422CB9231932220036C8A2 /* MagentoClient.swift */; };
+		66422CBD231949EA0036C8A2 /* MageHomeConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66422CBC231949EA0036C8A2 /* MageHomeConfig.swift */; };
+		66422CBF23195E650036C8A2 /* MageStoreConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66422CBE23195E650036C8A2 /* MageStoreConfig.swift */; };
 		6663F0AF2316E1D800601D7F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6663F0AE2316E1D800601D7F /* AppDelegate.swift */; };
 		6663F0B12316E1D800601D7F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6663F0B02316E1D800601D7F /* HomeViewController.swift */; };
 		6663F0B42316E1D800601D7F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6663F0B22316E1D800601D7F /* Main.storyboard */; };
@@ -43,6 +45,8 @@
 		663001AD2318221600812978 /* WebError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebError.swift; sourceTree = "<group>"; };
 		663001BC23182E3D00812978 /* MageCurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MageCurrency.swift; sourceTree = "<group>"; };
 		66422CB9231932220036C8A2 /* MagentoClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagentoClient.swift; sourceTree = "<group>"; };
+		66422CBC231949EA0036C8A2 /* MageHomeConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MageHomeConfig.swift; sourceTree = "<group>"; };
+		66422CBE23195E650036C8A2 /* MageStoreConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MageStoreConfig.swift; sourceTree = "<group>"; };
 		6663F0AB2316E1D800601D7F /* Swift Magento.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swift Magento.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6663F0AE2316E1D800601D7F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6663F0B02316E1D800601D7F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -104,6 +108,8 @@
 			isa = PBXGroup;
 			children = (
 				663001BC23182E3D00812978 /* MageCurrency.swift */,
+				66422CBC231949EA0036C8A2 /* MageHomeConfig.swift */,
+				66422CBE23195E650036C8A2 /* MageStoreConfig.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -242,12 +248,14 @@
 			files = (
 				66F7BB5A2317C9FB008A9C4B /* UIImageView+CacheURLLoad.swift in Sources */,
 				6663F0B12316E1D800601D7F /* HomeViewController.swift in Sources */,
+				66422CBF23195E650036C8A2 /* MageStoreConfig.swift in Sources */,
 				663001BD23182E3D00812978 /* MageCurrency.swift in Sources */,
 				663001A32318210F00812978 /* Cache.swift in Sources */,
 				66422CBA231932220036C8A2 /* MagentoClient.swift in Sources */,
 				663001A52318210F00812978 /* Resource.swift in Sources */,
 				663001A92318210F00812978 /* Result.swift in Sources */,
 				663001A22318210F00812978 /* CachedWebClient.swift in Sources */,
+				66422CBD231949EA0036C8A2 /* MageHomeConfig.swift in Sources */,
 				663001AE2318221600812978 /* WebError.swift in Sources */,
 				6663F0AF2316E1D800601D7F /* AppDelegate.swift in Sources */,
 				663001A42318210F00812978 /* Reachability.swift in Sources */,
