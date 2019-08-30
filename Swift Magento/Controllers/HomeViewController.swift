@@ -6,15 +6,18 @@
 //  Copyright © 2019 Dmytro. All rights reserved.
 //
 
+import CoreData
 import UIKit
 
 class HomeViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet var pageControl: UIPageControl!
     @IBOutlet var sliderScrollView: UIScrollView!
 
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+
     var restTask: URLSessionDataTask!
 
-    var storeConfig: MageStoreConfig?
+    var storeConfig: StoreConfig?
     var config: MageHomeConfigContent? {
         didSet {
             DispatchQueue.main.async {
@@ -22,6 +25,8 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
             }
         }
     }
+
+    // MARK: - initial setup -
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,11 +78,27 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
     // MARK: - Rest Actions  -
 
     func getConfig() {
+        let request: NSFetchRequest<StoreConfig> = StoreConfig.fetchRequest()
+        storeConfig = try? context.fetch(request).first
+        
+        if storeConfig == nil {
+            updateConfig()
+        } else {
+            getHomeConfig()
+        }
+    }
+
+    func updateConfig() {
         restTask?.cancel()
 
         restTask = MagentoClient.shared.getConfig {
             if let configs = $0.value {
-                self.storeConfig = configs.first
+                let fetchedConfig = self.storeConfig ?? StoreConfig(context: self.context)
+                fetchedConfig.base_media_url = configs.first?.base_media_url
+                self.storeConfig = fetchedConfig
+                
+                self.saveData()
+                
                 self.getHomeConfig()
             }
         }
@@ -92,4 +113,16 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
             }
         })
     }
+    
+    // MARK: - Save Data -
+    
+    func saveData() {
+        do {
+            try context.save()
+        } catch {
+            print("Error saving context, \(error)")
+        }
+    }
+    
+    // MARK: - END -
 }

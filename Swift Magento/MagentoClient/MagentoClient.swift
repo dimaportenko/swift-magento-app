@@ -10,9 +10,10 @@ import Foundation
 
 class MagentoClient {
     static let shared = MagentoClient()
-    let sharedWebClient = WebClient(baseUrl: "https://magento23xdemo.tigren.com/rest/V1")
+    
     let homeCmsBlockId = "1"
     let accessToken = "ioqnahqjd2brl3j56nrpkcrnu6thh6s3"
+    let sharedWebClient = WebClient(baseUrl: "https://magento23xdemo.tigren.com/rest/V1")
 
     private init() {}
 
