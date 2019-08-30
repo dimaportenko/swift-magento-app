@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DirectoryCurrency: Decodable {
+struct MageCurrency: Decodable {
     var base_currency_code: String
     var base_currency_symbol: String
     var default_display_currency_code: String

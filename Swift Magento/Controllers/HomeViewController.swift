@@ -75,28 +75,11 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
 }
 
 extension HomeViewController {
-    static let sharedWebClient = WebClient(baseUrl: "http://demo-acm-2.bird.eu/rest/V1")
-
     func testRestClient() {
         restTask?.cancel()
 
-//        activityIndicator.startAnimating()
-
-        let restResource = Resource<DirectoryCurrency, CustomError>(jsonDecoder: JSONDecoder(), path: "/directory/currency")
-
-        restTask = HomeViewController.sharedWebClient.load(resource: restResource) { [weak self] response in
-
-//            guard let controller = self else { return }
-            print("### response value", response.value)
-            DispatchQueue.main.async {
-//                controller.activityIndicator.stopAnimating()
-
-//                if let friends = response.value?.friends {
-//                    controller.friends = friends
-//                } else if let error = response.error {
-//                    controller.handleError(error)
-//                }
-            }
-        }
+        restTask = MagentoClient.shared.getCurrency(completion: { (response) in
+            print("### response", response)
+        })
     }
 }
