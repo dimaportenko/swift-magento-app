@@ -124,6 +124,16 @@
 			path = MagentoClient;
 			sourceTree = "<group>";
 		};
+		66422CC0231988760036C8A2 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				6663F0B52316E1D800601D7F /* Swift_Magento.xcdatamodeld */,
+				6663F0B82316E1D800601D7F /* Assets.xcassets */,
+				6663F0BA2316E1D800601D7F /* LaunchScreen.storyboard */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
 		6663F0A22316E1D800601D7F = {
 			isa = PBXGroup;
 			children = (
@@ -148,11 +158,8 @@
 				66F7BB5B2317D1DF008A9C4B /* Utils */,
 				66F7BB582317C291008A9C4B /* Views */,
 				66422CBB231932430036C8A2 /* MagentoClient */,
-				6663F0B22316E1D800601D7F /* Main.storyboard */,
-				6663F0B82316E1D800601D7F /* Assets.xcassets */,
-				6663F0BA2316E1D800601D7F /* LaunchScreen.storyboard */,
+				66422CC0231988760036C8A2 /* Assets */,
 				6663F0BD2316E1D800601D7F /* Info.plist */,
-				6663F0B52316E1D800601D7F /* Swift_Magento.xcdatamodeld */,
 			);
 			path = "Swift Magento";
 			sourceTree = "<group>";
@@ -160,6 +167,7 @@
 		66F7BB582317C291008A9C4B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6663F0B22316E1D800601D7F /* Main.storyboard */,
 				66F7BB562317C284008A9C4B /* SlideView.xib */,
 				66F7BB542317C1FF008A9C4B /* SlideView.swift */,
 			);
