@@ -18,7 +18,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
     var restTask: URLSessionDataTask!
 
     var storeConfig: StoreConfig?
-    var config: MageHomeConfigContent? {
+    var config: HomeConfigContent? {
         didSet {
             DispatchQueue.main.async {
                 self.setupSlides()
@@ -47,10 +47,11 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
     // MARK: - slides setup -
 
     func createSlides() -> [SlideView] {
-        let slides = config?.slider.map { (slideConf) -> SlideView in
+        let slides = config?.slider?.array.map { (slideItem) -> SlideView in
+            let slideConf = slideItem as! HomeConfigSlide
             let slide: SlideView = Bundle.main.loadNibNamed("SlideView", owner: self, options: nil)?.first as! SlideView
             slide.label.text = slideConf.title
-            let urlString = (storeConfig?.base_media_url ?? "") + slideConf.image
+            let urlString = (storeConfig?.base_media_url ?? "") + (slideConf.image ?? "")
             slide.imageView.loadImageUsingCache(withUrl: urlString)
             return slide
         }
@@ -78,9 +79,8 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
     // MARK: - Rest Actions  -
 
     func getConfig() {
-        let request: NSFetchRequest<StoreConfig> = StoreConfig.fetchRequest()
-        storeConfig = try? context.fetch(request).first
-        
+        storeConfig = try? context.fetch(StoreConfig.fetchRequest()).first
+
         if storeConfig == nil {
             updateConfig()
         } else {
@@ -96,26 +96,45 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
                 let fetchedConfig = self.storeConfig ?? StoreConfig(context: self.context)
                 fetchedConfig.base_media_url = configs.first?.base_media_url
                 self.storeConfig = fetchedConfig
-                
+
                 self.saveData()
-                
+
                 self.getHomeConfig()
             }
         }
     }
 
     func getHomeConfig() {
+        config = try? context.fetch(HomeConfigContent.fetchRequest()).first
+
+        if config == nil {
+            updateHomeConfig()
+        }
+    }
+
+    func updateHomeConfig() {
         restTask?.cancel()
 
         restTask = MagentoClient.shared.getHomeConfig(completion: { result, _ in
             if result != nil {
-                self.config = result
+                let config = self.config ?? HomeConfigContent(context: self.context)
+                if let slides = result?.slider.map({ sl -> HomeConfigSlide in
+                    let slide = HomeConfigSlide(context: self.context)
+                    slide.title = sl.title
+                    slide.image = sl.image
+                    slide.homeConfig = config
+                    return slide
+                }) {
+                    config.slider = NSOrderedSet(array: slides)
+                    self.config = config
+                    self.saveData()
+                }
             }
         })
     }
-    
+
     // MARK: - Save Data -
-    
+
     func saveData() {
         do {
             try context.save()
@@ -123,6 +142,6 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
             print("Error saving context, \(error)")
         }
     }
-    
+
     // MARK: - END -
 }

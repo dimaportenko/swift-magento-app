@@ -155,9 +155,9 @@
 			children = (
 				6663F0AE2316E1D800601D7F /* AppDelegate.swift */,
 				663001AC2318217E00812978 /* Controllers */,
-				66F7BB5B2317D1DF008A9C4B /* Utils */,
 				66F7BB582317C291008A9C4B /* Views */,
 				66422CBB231932430036C8A2 /* MagentoClient */,
+				66F7BB5B2317D1DF008A9C4B /* Utils */,
 				66422CC0231988760036C8A2 /* Assets */,
 				6663F0BD2316E1D800601D7F /* Info.plist */,
 			);
@@ -167,9 +167,9 @@
 		66F7BB582317C291008A9C4B /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				6663F0B22316E1D800601D7F /* Main.storyboard */,
 				66F7BB562317C284008A9C4B /* SlideView.xib */,
 				66F7BB542317C1FF008A9C4B /* SlideView.swift */,
+				6663F0B22316E1D800601D7F /* Main.storyboard */,
 			);
 			path = Views;
 			sourceTree = "<group>";
