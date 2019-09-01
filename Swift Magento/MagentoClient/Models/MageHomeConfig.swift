@@ -16,6 +16,7 @@ struct MageHomeConfig: Decodable {
 
 struct MageHomeConfigContent: Decodable {
     var slider: [MageHomeConfigSlide]
+    var featuredCategories: [String: [String: String]]
 }
 
 struct MageHomeConfigSlide: Decodable {

@@ -12,6 +12,7 @@ import UIKit
 class HomeViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet var pageControl: UIPageControl!
     @IBOutlet var sliderScrollView: UIScrollView!
+    @IBOutlet var containerScrollView: UIScrollView!
 
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
@@ -33,6 +34,8 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
         // Do any additional setup after loading the view.
         sliderScrollView.delegate = self
 
+        configureRefreshControl()
+        
         getConfig()
     }
 
@@ -42,6 +45,26 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
 
         pageControl.numberOfPages = slides.count
         pageControl.currentPage = 0
+    }
+
+    // MARK: - refresh control -
+
+    func configureRefreshControl() {
+        // Add the refresh control to your UIScrollView object.
+        containerScrollView.refreshControl = UIRefreshControl()
+        containerScrollView.refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
+    }
+
+    @objc func handleRefreshControl() {
+        // Update your content…
+        updateHomeConfig()
+    }
+    
+    func stopRefreshControl() {
+        // Dismiss the refresh control.
+        DispatchQueue.main.async {
+            self.containerScrollView.refreshControl?.endRefreshing()
+        }
     }
 
     // MARK: - slides setup -
@@ -118,6 +141,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
         restTask = MagentoClient.shared.getHomeConfig(completion: { result, _ in
             if result != nil {
                 let config = self.config ?? HomeConfigContent(context: self.context)
+                self.deleteSet(set: config.slider)
                 if let slides = result?.slider.map({ sl -> HomeConfigSlide in
                     let slide = HomeConfigSlide(context: self.context)
                     slide.title = sl.title
@@ -126,20 +150,44 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
                     return slide
                 }) {
                     config.slider = NSOrderedSet(array: slides)
-                    self.config = config
-                    self.saveData()
                 }
+                
+                self.deleteSet(set: config.featuredCategories)
+                if let featuredCategoriesConfig = result?.featuredCategories {
+                    var featuredCategories = [FeaturedCategory]()
+                    for (id, dataDict) in featuredCategoriesConfig {
+                        let category = FeaturedCategory(context: self.context)
+                        category.id = id
+                        category.title = dataDict["title"]
+                        category.homeConfig = config
+                        featuredCategories.append(category)
+                    }
+                    
+                    config.featuredCategories = NSOrderedSet(array: featuredCategories)
+                }
+                
+                self.config = config
+                self.saveData()
             }
+            
+            
+            self.stopRefreshControl()
         })
     }
 
-    // MARK: - Save Data -
+    // MARK: - CRUD Data -
 
     func saveData() {
         do {
             try context.save()
         } catch {
             print("Error saving context, \(error)")
+        }
+    }
+    
+    func deleteSet(set: NSOrderedSet?) {
+        for object in (set?.array ?? []) {
+            self.context.delete(object as! NSManagedObject)
         }
     }
 

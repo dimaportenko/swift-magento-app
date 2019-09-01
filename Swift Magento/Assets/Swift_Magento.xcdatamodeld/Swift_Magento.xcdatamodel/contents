@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14492.1" systemVersion="18G87" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="FeaturedCategory" representedClassName="FeaturedCategory" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="homeConfig" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HomeConfigContent" inverseName="featuredCategories" inverseEntity="HomeConfigContent" syncable="YES"/>
+    </entity>
     <entity name="HomeConfigContent" representedClassName="HomeConfigContent" syncable="YES" codeGenerationType="class">
-        <relationship name="slider" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="HomeConfigSlide" inverseName="homeConfig" inverseEntity="HomeConfigSlide" syncable="YES"/>
+        <relationship name="featuredCategories" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="FeaturedCategory" inverseName="homeConfig" inverseEntity="FeaturedCategory" syncable="YES"/>
+        <relationship name="slider" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="HomeConfigSlide" inverseName="homeConfig" inverseEntity="HomeConfigSlide" syncable="YES"/>
     </entity>
     <entity name="HomeConfigSlide" representedClassName="HomeConfigSlide" syncable="YES" codeGenerationType="class">
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
@@ -12,8 +18,9 @@
         <attribute name="base_media_url" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
+        <element name="HomeConfigContent" positionX="-415.92578125" positionY="227.80078125" width="123.3046875" height="73"/>
+        <element name="HomeConfigSlide" positionX="-170.49609375" positionY="234.45703125" width="128" height="88"/>
         <element name="StoreConfig" positionX="-45" positionY="0" width="128" height="60"/>
-        <element name="HomeConfigContent" positionX="-292.74609375" positionY="223.19921875" width="119.41796875" height="58"/>
-        <element name="HomeConfigSlide" positionX="-98.87109375" positionY="223.1015625" width="128" height="88"/>
+        <element name="FeaturedCategory" positionX="-165.953125" positionY="144" width="122.953125" height="88"/>
     </elements>
 </model>
