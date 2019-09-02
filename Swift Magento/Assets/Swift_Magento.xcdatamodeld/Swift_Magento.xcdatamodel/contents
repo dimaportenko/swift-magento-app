@@ -18,9 +18,9 @@
         <attribute name="base_media_url" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="HomeConfigContent" positionX="-415.92578125" positionY="227.80078125" width="123.3046875" height="73"/>
+        <element name="FeaturedCategory" positionX="-165.953125" positionY="144" width="122.953125" height="88"/>
+        <element name="HomeConfigContent" positionX="-415.92578125" positionY="227.80078125" width="123.3046875" height="75"/>
         <element name="HomeConfigSlide" positionX="-170.49609375" positionY="234.45703125" width="128" height="88"/>
         <element name="StoreConfig" positionX="-45" positionY="0" width="128" height="60"/>
-        <element name="FeaturedCategory" positionX="-165.953125" positionY="144" width="122.953125" height="88"/>
     </elements>
 </model>

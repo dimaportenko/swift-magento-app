@@ -140,8 +140,10 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
 
         restTask = MagentoClient.shared.getHomeConfig(completion: { result, _ in
             if result != nil {
-                let config = self.config ?? HomeConfigContent(context: self.context)
-                self.deleteSet(set: config.slider)
+                if self.config != nil {
+                    self.context.delete(self.config!)
+                }
+                let config = HomeConfigContent(context: self.context)
                 if let slides = result?.slider.map({ sl -> HomeConfigSlide in
                     let slide = HomeConfigSlide(context: self.context)
                     slide.title = sl.title
@@ -152,7 +154,6 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
                     config.slider = NSOrderedSet(array: slides)
                 }
                 
-                self.deleteSet(set: config.featuredCategories)
                 if let featuredCategoriesConfig = result?.featuredCategories {
                     var featuredCategories = [FeaturedCategory]()
                     for (id, dataDict) in featuredCategoriesConfig {
