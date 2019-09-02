@@ -163,17 +163,27 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
                         category.homeConfig = config
                         featuredCategories.append(category)
                     }
-                    
+
                     config.featuredCategories = NSOrderedSet(array: featuredCategories)
                 }
-                
+
                 self.config = config
                 self.saveData()
             }
-            
-            
+
             self.stopRefreshControl()
+            if (self.config?.featuredCategories?.count) != nil {
+                self.updateFeaturedCategories()
+            }
         })
+    }
+    
+    func updateFeaturedCategories() {
+        for category in config?.featuredCategories ?? [] {
+            MagentoClient.shared.getProducts(categoryId: (category as! FeaturedCategory).id!) { (result) in
+                print("products result", result)
+            }
+        }
     }
 
     // MARK: - CRUD Data -
@@ -185,10 +195,10 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
             print("Error saving context, \(error)")
         }
     }
-    
+
     func deleteSet(set: NSOrderedSet?) {
-        for object in (set?.array ?? []) {
-            self.context.delete(object as! NSManagedObject)
+        for object in set?.array ?? [] {
+            context.delete(object as! NSManagedObject)
         }
     }
 

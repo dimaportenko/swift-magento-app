@@ -34,16 +34,30 @@ class MagentoClient {
                     completion(nil, error)
                 }
             }
-            
         }
     }
-    
+
     func getConfig(completion: @escaping (Result<[MageStoreConfig], CustomError>) -> ()) -> URLSessionDataTask? {
         let restResource = Resource<[MageStoreConfig], CustomError>(path: "/store/storeConfigs", headers: adminHeader())
         return sharedWebClient.load(resource: restResource, completion: completion)
     }
 
+    func getProducts(categoryId: String, completion: @escaping (Result<MageProducts, CustomError>) -> ()) -> URLSessionDataTask? {
+        let params = [
+            "searchCriteria[filterGroups][0][filters][0][field]": "category_id",
+            "searchCriteria[filterGroups][0][filters][0][value]": categoryId,
+            "searchCriteria[filterGroups][0][filters][0][conditionType]": "eq",
+            "searchCriteria[filterGroups][1][filters][0][field]": "visibility",
+            "searchCriteria[filterGroups][1][filters][0][value]": "4",
+            "searchCriteria[filterGroups][1][filters][0][conditionType]": "eq",
+            "searchCriteria[pageSize]": "10",
+            "searchCriteria[currentPage]": "1",
+        ] as JSON
+        let restResource = Resource<MageProducts, CustomError>(path: "/products", params: params, headers: adminHeader())
+        return sharedWebClient.load(resource: restResource, completion: completion)
+    }
+
     func adminHeader() -> HTTPHeaders {
-        return ["Authorization": "Bearer \(accessToken)"];
+        return ["Authorization": "Bearer \(accessToken)"]
     }
 }

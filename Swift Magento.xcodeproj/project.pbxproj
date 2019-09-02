@@ -30,6 +30,7 @@
 		66F7BB552317C1FF008A9C4B /* SlideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F7BB542317C1FF008A9C4B /* SlideView.swift */; };
 		66F7BB572317C284008A9C4B /* SlideView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66F7BB562317C284008A9C4B /* SlideView.xib */; };
 		66F7BB5A2317C9FB008A9C4B /* UIImageView+CacheURLLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F7BB592317C9FB008A9C4B /* UIImageView+CacheURLLoad.swift */; };
+		B0DD6070B395689A5CBAF393 /* MageProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DD6C3DBDED3D7ED0B917B8 /* MageProduct.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		66F7BB542317C1FF008A9C4B /* SlideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideView.swift; sourceTree = "<group>"; };
 		66F7BB562317C284008A9C4B /* SlideView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SlideView.xib; sourceTree = "<group>"; };
 		66F7BB592317C9FB008A9C4B /* UIImageView+CacheURLLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+CacheURLLoad.swift"; sourceTree = "<group>"; };
+		B0DD6C3DBDED3D7ED0B917B8 /* MageProduct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MageProduct.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +112,7 @@
 				663001BC23182E3D00812978 /* MageCurrency.swift */,
 				66422CBC231949EA0036C8A2 /* MageHomeConfig.swift */,
 				66422CBE23195E650036C8A2 /* MageStoreConfig.swift */,
+				B0DD6C3DBDED3D7ED0B917B8 /* MageProduct.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -273,6 +276,7 @@
 				663001A72318210F00812978 /* CacheItem.swift in Sources */,
 				663001A12318210F00812978 /* Path.swift in Sources */,
 				6663F0B72316E1D800601D7F /* Swift_Magento.xcdatamodeld in Sources */,
+				B0DD6070B395689A5CBAF393 /* MageProduct.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
